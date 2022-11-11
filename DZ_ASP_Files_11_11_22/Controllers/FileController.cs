@@ -11,17 +11,12 @@ namespace DZ_ASP_Files_11_11_22.Controllers
     {
         FileWork fw = new FileWork();
         [HttpGet("GetFilesNames")]
-        public IEnumerable<string> GetNames()
-        {
-            return fw.Repos.GetFilesNames();
-        }
-
+        public IEnumerable<string> GetNames() => fw.Repos.GetFilesNames();
+        [HttpGet("GetFilesNamesByDate")]
+        public IEnumerable<string> GetNamesByDate(DateTime date) => fw.Repos.GetFilesNamesByDate(date);
 
 
         [HttpPost("PostFile")]
-        public Task<HttpStatusCode> OnPostUploadAsync(IFormFile file)
-        {
-            return fw.Repos.AddFile(file);
-        }
+        public Task<HttpStatusCode> OnPostUploadAsync(IFormFile file) => fw.Repos.AddFile(file);
     }
 }
