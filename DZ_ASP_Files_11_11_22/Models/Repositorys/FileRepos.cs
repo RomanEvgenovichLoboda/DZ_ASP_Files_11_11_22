@@ -13,10 +13,7 @@ namespace DZ_ASP_Files_11_11_22.Models.Repositorys
         public IEnumerable<string> GetFilesNames() => new DirectoryInfo(path).GetFiles().Select(f => f.Name);
         public IEnumerable<string> GetFilesNamesByDate(DateTime date) => new DirectoryInfo(path).GetFiles()
             .Where(f => f.LastWriteTime.ToShortDateString()== date.ToShortDateString()).Select(f => f.Name);
-
-
-
-
+        public byte[] GetFileBytes(string name) => File.Exists(path + name) ? File.ReadAllBytes(path + name) : null;
         public async Task<HttpStatusCode> AddFile(IFormFile file)
         {
             if(file.Length > 0)
