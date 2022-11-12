@@ -14,6 +14,16 @@ namespace DZ_ASP_Files_11_11_22.Controllers
         public IEnumerable<string> GetNamesByDate(DateTime date) => fw.Repos.GetFilesNamesByDate(date);
         [HttpGet("GetFileBytesByName")]
         public byte[] GetFileBytesByName(string name) => fw.Repos.GetFileBytes(name);
+        [HttpGet("DownloadFileByName")]
+        public IActionResult DownloadFile(string name)
+        {
+            var net = new WebClient();
+            var data = net.DownloadData(Directory.GetCurrentDirectory() + "/MyFiles/"+name);
+            var content = new MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = name;
+            return File(content,contentType,fileName);
+        }
         [HttpPost("PostFile")]
         public Task<HttpStatusCode> OnPostUploadAsync(IFormFile file) => fw.Repos.AddFile(file);
     }
